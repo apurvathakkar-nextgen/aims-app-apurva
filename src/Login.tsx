@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'; // For navigation
 import { Amplify } from 'aws-amplify';
 import awsExports from './amplify_outputs.json';
 import { signIn } from 'aws-amplify/auth';
+import { getCurrentUser } from 'aws-amplify/auth';
 import {
   TextField,
   Button,
@@ -30,8 +31,18 @@ const Login: React.FC = () => {
   const handleLogin = async () => {
     setError(null);
     try {
+      // ✅ Check if user is already signed in
+      const currentUser = await getCurrentUser();
+      if (currentUser) {
+        console.log('User already signed in:', currentUser);
+        navigate('/workspace'); // ✅ Redirect if already logged in
+        return;
+      }
+  
+      // If no user is signed in, proceed with login
       await signIn({ username: email, password });
       alert('Login successful! 🎉');
+      navigate('/workspace'); // ✅ Redirect after login
     } catch (err: any) {
       setError(err.message);
     }
@@ -85,7 +96,7 @@ const Login: React.FC = () => {
             color={darkMode ? '#ffffff' : '#004aad'}
             mb={2}
           >
-            Automation Life Cycle
+            Automation Life Cycle Management
           </Typography>
           <Typography variant="subtitle1" color={darkMode ? 'lightgray' : 'gray'} mb={3}>
             Sign in to continue
