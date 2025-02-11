@@ -1,12 +1,16 @@
-import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Login from './Login.tsx';
+import SignUp from './SignUp.tsx';
 
-const App: React.FC = () => {
+function App() {
   return (
-    <div>
-      <h1>Hello, AWS Amplify!</h1>
-      <p>Your React frontend is successfully connected.</p>
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<Login />} />
+        <Route path="/signup" element={<SignUp />} />
+      </Routes>
+    </Router>
   );
-};
+}
 
 export default App;
