@@ -1,28 +1,30 @@
-import { Navigate } from "react-router-dom";
-import { useEffect, useState } from "react";
-import { getCurrentUser } from "aws-amplify/auth";
+import React from 'react';
+import { Navigate } from 'react-router-dom';
+import { getCurrentUser } from 'aws-amplify/auth';
 
-const PrivateRoute = ({ children }: { children: React.ReactNode }) => {
-  const [authenticated, setAuthenticated] = useState(false);
-  const [loading, setLoading] = useState(true);
+const PrivateRoute = ({ children }) => {
+  const [isAuthenticated, setIsAuthenticated] = React.useState(false);
+  const [loading, setLoading] = React.useState(true);
 
-  useEffect(() => {
-    const checkUser = async () => {
+  React.useEffect(() => {
+    const checkAuth = async () => {
       try {
         await getCurrentUser();
-        setAuthenticated(true);
-      } catch {
-        setAuthenticated(false);
+        setIsAuthenticated(true);
+      } catch (error) {
+        setIsAuthenticated(false);
+      } finally {
+        setLoading(false);
       }
-      setLoading(false);
     };
-
-    checkUser();
+    checkAuth();
   }, []);
 
-  if (loading) return <div>Loading...</div>;
+  if (loading) {
+    return <div>Loading...</div>; // Show a loading spinner while checking auth
+  }
 
-  return authenticated ? children : <Navigate to="/" />;
+  return isAuthenticated ? children : <Navigate to="/" />;
 };
 
 export default PrivateRoute;
