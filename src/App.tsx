@@ -44,7 +44,11 @@ function App() {
             <Route
               key={index}
               path={route.path}
-              element={<PrivateRoute>{route.element}</PrivateRoute>}
+              element={
+                <PrivateRoute>
+                  {route.element}
+                </PrivateRoute>
+              }
             />
           ))}
         </Routes>
