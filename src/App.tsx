@@ -30,27 +30,39 @@ const protectedRoutes = [
 ];
 
 function App() {
+  console.log("App Component Rendered");
+
   return (
     <Router>
       <Layout>
         <Routes>
           {/* Public Routes */}
-          {publicRoutes.map((route, index) => (
-            <Route key={index} path={route.path} element={route.element} />
-          ))}
+          {publicRoutes.map((route, index) => {
+            console.log(`Rendering public route: ${route.path}`);
+            return (
+              <Route
+                key={index}
+                path={route.path}
+                element={route.element}
+              />
+            );
+          })}
 
           {/* Protected Routes */}
-          {protectedRoutes.map((route, index) => (
-            <Route
-              key={index}
-              path={route.path}
-              element={
-                <PrivateRoute>
-                  {route.element}
-                </PrivateRoute>
-              }
-            />
-          ))}
+          {protectedRoutes.map((route, index) => {
+            console.log(`Rendering protected route: ${route.path}`);
+            return (
+              <Route
+                key={index}
+                path={route.path}
+                element={
+                  <PrivateRoute>
+                    {route.element}
+                  </PrivateRoute>
+                }
+              />
+            );
+          })}
         </Routes>
       </Layout>
     </Router>
