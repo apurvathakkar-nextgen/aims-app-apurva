@@ -2,8 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom'; // For navigation
 import { Amplify } from 'aws-amplify';
 import awsExports from './amplify_outputs.json';
-import { signIn } from 'aws-amplify/auth';
-import { getCurrentUser } from 'aws-amplify/auth';
+import { signIn, getCurrentUser } from 'aws-amplify/auth';
 import {
   TextField,
   Button,
@@ -30,23 +29,40 @@ const Login: React.FC = () => {
   // Handle Login
   const handleLogin = async () => {
     setError(null);
+    console.log("Starting login process...");
+
     try {
-      // ✅ Check if user is already signed in
+      console.log("Attempting to sign in with email:", email);
+
+      // Step 1: Attempt to sign in
+      const signInResponse = await signIn({ username: email, password });
+      console.log("SignIn Response:", signInResponse);
+
+      // Step 2: Check if the user is authenticated
+      console.log("Checking if user is authenticated...");
       const currentUser = await getCurrentUser();
-      console.log("Current User Logged IN");
+      console.log("Current User:", currentUser);
+
       if (currentUser) {
-        console.log('User already signed in:', currentUser);
-        navigate('/workspace'); // ✅ Redirect if already logged in
-        return;
+        console.log("User is authenticated. Redirecting to /workspace...");
+        navigate('/workspace'); // Redirect after successful login
+      } else {
+        console.error("User is not authenticated after sign-in.");
+        setError("User authentication failed. Please try again.");
       }
-  
-      // If no user is signed in, proceed with login
-      await signIn({ username: email, password });
-      console.log("Login Successful");
-      alert('Login successful! 🎉');
-      navigate('/workspace'); // ✅ Redirect after login
     } catch (err: any) {
-      setError(err.message);
+      console.error("Login Error Details:", err);
+
+      // Handle specific Cognito errors
+      if (err.name === "UserNotConfirmedException") {
+        setError("Your account is not confirmed. Please check your email for verification instructions.");
+      } else if (err.name === "NotAuthorizedException") {
+        setError("Incorrect email or password. Please try again.");
+      } else if (err.name === "UserNotFoundException") {
+        setError("No user found with this email address. Please sign up.");
+      } else {
+        setError(err.message || "An unexpected error occurred during login.");
+      }
     }
   };
 
@@ -182,7 +198,7 @@ const Login: React.FC = () => {
             Forgot your password?
           </Typography>
 
-          {/* Sign-Up Button (NEW) */}
+          {/* Sign-Up Button */}
           <Typography
             mt={3}
             sx={{ cursor: 'pointer', color: 'blue', fontWeight: 'bold' }}
@@ -190,7 +206,6 @@ const Login: React.FC = () => {
           >
             Don't have an account? Sign up
           </Typography>
-
         </Paper>
       </motion.div>
     </Box>
