@@ -8,75 +8,45 @@ import ProjectPlanning from "./pages/ProjectPlanning.tsx";
 import ProjectDevelopment from "./pages/ProjectDevelopment.tsx";
 import ProjectTesting from "./pages/ProjectTesting.tsx";
 import ProjectDeployment from "./pages/ProjectDeployment.tsx";
+import IdeaManagementPage from "./pages/IdeaManagementPage.tsx"; // Import the new component
 import PrivateRoute from "./components/PrivateRoute.tsx";
 import Layout from "./components/Layout.tsx";
+
+// Define public and protected routes
+const publicRoutes = [
+  { path: '/', element: <Login /> },
+  { path: '/signup', element: <SignUp /> },
+];
+
+const protectedRoutes = [
+  { path: '/workspace', element: <Workspace /> },
+  { path: '/teams', element: <Teams /> },
+  { path: '/project-summary', element: <ProjectSummary /> },
+  { path: '/project-planning', element: <ProjectPlanning /> },
+  { path: '/project-development', element: <ProjectDevelopment /> },
+  { path: '/idea-management', element: <IdeaManagementPage /> },
+  { path: '/project-testing', element: <ProjectTesting /> },
+  { path: '/project-deployment', element: <ProjectDeployment /> },
+];
 
 function App() {
   return (
     <Router>
-      <Layout> {/* Wrap Everything in Layout */}
+      <Layout>
         <Routes>
           {/* Public Routes */}
-          <Route path="/" element={<Login />} />
-          <Route path="/signup" element={<SignUp />} />
+          {publicRoutes.map((route, index) => (
+            <Route key={index} path={route.path} element={route.element} />
+          ))}
 
           {/* Protected Routes */}
-          <Route
-            path="/workspace"
-            element={
-              <PrivateRoute>
-                <Workspace />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/teams"
-            element={
-              <PrivateRoute>
-                <Teams />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/project-summary"
-            element={
-              <PrivateRoute>
-                <ProjectSummary />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/project-planning"
-            element={
-              <PrivateRoute>
-                <ProjectPlanning />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/project-development"
-            element={
-              <PrivateRoute>
-                <ProjectDevelopment />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/project-testing"
-            element={
-              <PrivateRoute>
-                <ProjectTesting />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/project-deployment"
-            element={
-              <PrivateRoute>
-                <ProjectDeployment />
-              </PrivateRoute>
-            }
-          />
+          {protectedRoutes.map((route, index) => (
+            <Route
+              key={index}
+              path={route.path}
+              element={<PrivateRoute>{route.element}</PrivateRoute>}
+            />
+          ))}
         </Routes>
       </Layout>
     </Router>

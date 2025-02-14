@@ -9,6 +9,7 @@ import {
   ExitToApp as LogoutIcon,
   Menu as MenuIcon,
   ChevronLeft as ChevronLeftIcon,
+  Lightbulb as IdeaIcon, // Add this icon for Idea Management
 } from '@mui/icons-material';
 
 const Sidebar = () => {
@@ -56,6 +57,14 @@ const Sidebar = () => {
             <HomeIcon />
           </ListItemIcon>
           {!isCollapsed && <ListItemText primary="Home" sx={{ color: '#000000' }} />}
+        </ListItem>
+
+        {/* Idea Management Link */}
+        <ListItem button component={Link} to="/idea-management" sx={{ borderRadius: 1, mb: 1, '&:hover': { backgroundColor: '#f0f0f0' } }}>
+          <ListItemIcon sx={{ color: '#000000' }}>
+            <IdeaIcon /> {/* Use the Lightbulb icon for Idea Management */}
+          </ListItemIcon>
+          {!isCollapsed && <ListItemText primary="Idea Management" sx={{ color: '#000000' }} />}
         </ListItem>
 
         {/* Workspace Link */}
