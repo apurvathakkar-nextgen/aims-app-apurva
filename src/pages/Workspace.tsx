@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getCurrentUser } from 'aws-amplify/auth';
+//import { Auth } from 'aws-amplify'; 
 import {
   Typography,
   Paper,

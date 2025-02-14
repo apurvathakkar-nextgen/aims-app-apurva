@@ -33,6 +33,7 @@ const Login: React.FC = () => {
     try {
       // ✅ Check if user is already signed in
       const currentUser = await getCurrentUser();
+      console.log("Current User Logged IN");
       if (currentUser) {
         console.log('User already signed in:', currentUser);
         navigate('/workspace'); // ✅ Redirect if already logged in
@@ -41,6 +42,7 @@ const Login: React.FC = () => {
   
       // If no user is signed in, proceed with login
       await signIn({ username: email, password });
+      console.log("Login Successful");
       alert('Login successful! 🎉');
       navigate('/workspace'); // ✅ Redirect after login
     } catch (err: any) {
