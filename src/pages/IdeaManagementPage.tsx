@@ -4,6 +4,7 @@ import SummaryTab from './SummaryTab.tsx';
 import PlatformAssessmentTab from './PlatformAssessmentTab.tsx';
 import ProcessAssessmentTab from './ProcessAssessmentTab.tsx';
 import ValueAssessmentTab from './ValueAssessmentTab.tsx';
+import CostBenefitAnalysisTab from './CostBenefitAnalysisTab.tsx'; // New component
 
 const IdeaManagementPage: React.FC = () => {
   const [activeTab, setActiveTab] = useState(0);
@@ -51,6 +52,7 @@ const IdeaManagementPage: React.FC = () => {
           <Tab label="Platform Assessment" />
           <Tab label="Process Assessment" />
           <Tab label="Value Assessment" />
+          <Tab label="Cost Benefit Analysis" /> {/* New Tab */}
         </Tabs>
       </Box>
 
@@ -60,6 +62,7 @@ const IdeaManagementPage: React.FC = () => {
         {activeTab === 1 && <PlatformAssessmentTab />}
         {activeTab === 2 && <ProcessAssessmentTab />}
         {activeTab === 3 && <ValueAssessmentTab />}
+        {activeTab === 4 && <CostBenefitAnalysisTab />} {/* New Tab Content */}
       </Box>
     </div>
   );
