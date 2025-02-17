@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom'; // For navigation
 import { Amplify } from 'aws-amplify';
 import awsExports from './amplify_outputs.json';
@@ -24,7 +24,23 @@ const Login: React.FC = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [darkMode, setDarkMode] = useState(false);
-  const navigate = useNavigate(); // Navigation function
+  const navigate = useNavigate();
+
+  // Check if user is already signed in and navigate to /workspace if so.
+  useEffect(() => {
+    (async () => {
+      try {
+        const currentUser = await getCurrentUser();
+        if (currentUser) {
+          console.log("User already signed in. Navigating to /workspace.");
+          navigate('/workspace');
+        }
+      } catch (err) {
+        // If no current user, do nothing.
+        console.log("No current user found.");
+      }
+    })();
+  }, [navigate]);
 
   // Handle Login
   const handleLogin = async () => {
@@ -34,11 +50,11 @@ const Login: React.FC = () => {
     try {
       console.log("Attempting to sign in with email:", email);
 
-      // Step 1: Attempt to sign in
+      // Attempt to sign in
       const signInResponse = await signIn({ username: email, password });
       console.log("SignIn Response:", signInResponse);
 
-      // Step 2: Check if the user is authenticated
+      // Check if the user is authenticated
       console.log("Checking if user is authenticated...");
       const currentUser = await getCurrentUser();
       console.log("Current User:", currentUser);
@@ -163,7 +179,11 @@ const Login: React.FC = () => {
               endAdornment: (
                 <InputAdornment position="end">
                   <IconButton onClick={() => setShowPassword(!showPassword)}>
-                    {showPassword ? <VisibilityOff sx={{ color: darkMode ? 'white' : 'black' }} /> : <Visibility sx={{ color: darkMode ? 'white' : 'black' }} />}
+                    {showPassword ? (
+                      <VisibilityOff sx={{ color: darkMode ? 'white' : 'black' }} />
+                    ) : (
+                      <Visibility sx={{ color: darkMode ? 'white' : 'black' }} />
+                    )}
                   </IconButton>
                 </InputAdornment>
               ),
@@ -198,7 +218,7 @@ const Login: React.FC = () => {
             Forgot your password?
           </Typography>
 
-          {/* Sign-Up Button */}
+          {/* Sign-Up Link */}
           <Typography
             mt={3}
             sx={{ cursor: 'pointer', color: 'blue', fontWeight: 'bold' }}
