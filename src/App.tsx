@@ -10,9 +10,9 @@ import ProjectPlanning from "./pages/ProjectPlanning.tsx";
 import ProjectDevelopment from "./pages/ProjectDevelopment.tsx";
 import ProjectTesting from "./pages/ProjectTesting.tsx";
 import ProjectDeployment from "./pages/ProjectDeployment.tsx";
-import IdeaManagementPage from "./pages/IdeaManagementSummary.tsx";
-import Approval from "./pages/Approval.tsx"; // New Approval component
-import ControlRoom from "./pages/ControlRoom.tsx"; // New Control Room (Settings) component
+import IdeaManagementPage from "./pages/IdeaManagementPage.tsx";
+import Approval from "./pages/Approval.tsx"; 
+import ControlRoom from "./pages/ControlRoom.tsx"; 
 import PrivateRoute from "./components/PrivateRoute.tsx";
 import Layout from "./components/Layout.tsx";
 

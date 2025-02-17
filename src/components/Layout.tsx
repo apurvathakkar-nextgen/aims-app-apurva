@@ -5,7 +5,7 @@ import Sidebar from './Sidebar.tsx';
 
 const Layout = ({ children }) => {
   const location = useLocation();
-  const hideSidebarPaths = ['/', '/signup']; // no longer "/"
+  const hideSidebarPaths = ['/', '/signup','/logout']; // no longer "/"
 
   const shouldShowSidebar = !hideSidebarPaths.includes(location.pathname);
 
