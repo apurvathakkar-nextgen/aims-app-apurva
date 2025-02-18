@@ -18,7 +18,7 @@ import Layout from "./components/Layout.tsx";
 
 // Define public and protected routes
 const publicRoutes = [
-  { path: '/login', element: <Login /> },
+  { path: '/', element: <Login /> },
   { path: '/signup', element: <SignUp /> },
 ];
 
