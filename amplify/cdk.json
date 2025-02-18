@@ -1,0 +1,1 @@
+{"app": "node --loader ts-node/esm bin/app.ts"}  

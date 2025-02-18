@@ -1,0 +1,95 @@
+{
+  "version": "39.0.0",
+  "artifacts": {
+    "AmplifyAppStack.assets": {
+      "type": "cdk:asset-manifest",
+      "properties": {
+        "file": "AmplifyAppStack.assets.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+      }
+    },
+    "AmplifyAppStack": {
+      "type": "aws:cloudformation:stack",
+      "environment": "aws://unknown-account/unknown-region",
+      "properties": {
+        "templateFile": "AmplifyAppStack.template.json",
+        "terminationProtection": false,
+        "validateOnSynth": false,
+        "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-deploy-role-${AWS::AccountId}-${AWS::Region}",
+        "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-cfn-exec-role-${AWS::AccountId}-${AWS::Region}",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/4570d2de5f852649547cfe6fc3487aade0f81d79947ecbf15b6e89d4abdabe28.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
+        "additionalDependencies": [
+          "AmplifyAppStack.assets"
+        ],
+        "lookupRole": {
+          "arn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-lookup-role-${AWS::AccountId}-${AWS::Region}",
+          "requiresBootstrapStackVersion": 8,
+          "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+        }
+      },
+      "dependencies": [
+        "AmplifyAppStack.assets"
+      ],
+      "metadata": {
+        "/AmplifyAppStack/AIMS-App/Role/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AIMSAppRole445FDD2E"
+          }
+        ],
+        "/AmplifyAppStack/AIMS-App/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AIMSApp94C46BCA"
+          }
+        ],
+        "/AmplifyAppStack/AIMS-App/main/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AIMSAppmain5A68A137"
+          }
+        ],
+        "/AmplifyAppStack/AmplifyAppURL": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AmplifyAppURL"
+          }
+        ],
+        "/AmplifyAppStack/CDKMetadata/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadata"
+          }
+        ],
+        "/AmplifyAppStack/CDKMetadata/Condition": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadataAvailable"
+          }
+        ],
+        "/AmplifyAppStack/BootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BootstrapVersion"
+          }
+        ],
+        "/AmplifyAppStack/CheckBootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CheckBootstrapVersion"
+          }
+        ]
+      },
+      "displayName": "AmplifyAppStack"
+    },
+    "Tree": {
+      "type": "cdk:tree",
+      "properties": {
+        "file": "tree.json"
+      }
+    }
+  }
+}

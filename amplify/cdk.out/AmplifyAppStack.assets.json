@@ -1,0 +1,19 @@
+{
+  "version": "39.0.0",
+  "files": {
+    "db6b4a32d421fabdde085e2ab0d76f887d9a7fb9566fe7024061af89af889750": {
+      "source": {
+        "path": "AmplifyAppStack.template.json",
+        "packaging": "file"
+      },
+      "destinations": {
+        "current_account-current_region": {
+          "bucketName": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}",
+          "objectKey": "db6b4a32d421fabdde085e2ab0d76f887d9a7fb9566fe7024061af89af889750.json",
+          "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-file-publishing-role-${AWS::AccountId}-${AWS::Region}"
+        }
+      }
+    }
+  },
+  "dockerImages": {}
+}

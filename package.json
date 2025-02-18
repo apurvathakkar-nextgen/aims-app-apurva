@@ -1,53 +1,32 @@
 {
-  "name": "frontend",
-  "version": "0.1.0",
+  "name": "aims-application",
+  "version": "1.0.0",
+  "main": "index.js",
   "private": true,
-  "dependencies": {
-    "@aws-amplify/auth": "^6.10.2",
-    "@aws-amplify/ui-react": "^6.9.1",
-    "@dnd-kit/core": "^6.3.1",
-    "@dnd-kit/modifiers": "^9.0.0",
-    "@dnd-kit/sortable": "^10.0.0",
-    "@emotion/react": "^11.14.0",
-    "@emotion/styled": "^11.14.0",
-    "@mui/icons-material": "^6.4.3",
-    "@mui/material": "^6.4.4",
-    "@shadcn/ui": "^0.0.4",
-    "aws-amplify": "^6.12.3",
-    "chart.js": "^4.4.7",
-    "cra-template-typescript": "1.2.0",
-    "framer-motion": "^12.4.2",
-    "jspdf": "^2.5.2",
-    "react": "^18.3.1",
-    "react-beautiful-dnd": "^13.1.1",
-    "react-chartjs-2": "^5.3.0",
-    "react-dom": "^18.3.1",
-    "react-router-dom": "^7.1.5",
-    "react-scripts": "5.0.1",
-    "recharts": "^2.15.1"
-  },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "start:frontend": "cd frontend && npm start",
+    "build:frontend": "cd frontend && npm run build",
+    "amplify:push": "amplify push",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "description": "",
+  "devDependencies": {
+    "@aws-amplify/backend": "^1.14.1",
+    "@aws-amplify/backend-cli": "^1.4.10",
+    "aws-cdk": "^2.178.1",
+    "aws-cdk-lib": "^2.178.1",
+    "constructs": "^10.4.2",
+    "esbuild": "^0.25.0",
+    "ts-node": "^10.9.2",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.3"
   },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+  "dependencies": {
+    "@aws-cdk/aws-amplify-alpha": "^2.178.1-alpha.0",
+    "aws-amplify": "^6.12.3"
   }
 }

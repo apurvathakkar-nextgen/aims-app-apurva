@@ -1,0 +1,202 @@
+{
+  "version": "tree-0.1",
+  "tree": {
+    "id": "App",
+    "path": "",
+    "children": {
+      "AmplifyAppStack": {
+        "id": "AmplifyAppStack",
+        "path": "AmplifyAppStack",
+        "children": {
+          "AIMS-App": {
+            "id": "AIMS-App",
+            "path": "AmplifyAppStack/AIMS-App",
+            "children": {
+              "Role": {
+                "id": "Role",
+                "path": "AmplifyAppStack/AIMS-App/Role",
+                "children": {
+                  "ImportRole": {
+                    "id": "ImportRole",
+                    "path": "AmplifyAppStack/AIMS-App/Role/ImportRole",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.Resource",
+                      "version": "2.178.1",
+                      "metadata": []
+                    }
+                  },
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "AmplifyAppStack/AIMS-App/Role/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::IAM::Role",
+                      "aws:cdk:cloudformation:props": {
+                        "assumeRolePolicyDocument": {
+                          "Statement": [
+                            {
+                              "Action": "sts:AssumeRole",
+                              "Effect": "Allow",
+                              "Principal": {
+                                "Service": "amplify.amazonaws.com"
+                              }
+                            }
+                          ],
+                          "Version": "2012-10-17"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_iam.CfnRole",
+                      "version": "2.178.1"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_iam.Role",
+                  "version": "2.178.1",
+                  "metadata": []
+                }
+              },
+              "Resource": {
+                "id": "Resource",
+                "path": "AmplifyAppStack/AIMS-App/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::Amplify::App",
+                  "aws:cdk:cloudformation:props": {
+                    "basicAuthConfig": {
+                      "enableBasicAuth": false
+                    },
+                    "environmentVariables": [
+                      {
+                        "name": "AMPLIFY_ENV",
+                        "value": "dev"
+                      }
+                    ],
+                    "iamServiceRole": {
+                      "Fn::GetAtt": [
+                        "AIMSAppRole445FDD2E",
+                        "Arn"
+                      ]
+                    },
+                    "name": "AIMS-App",
+                    "oauthToken": "{{resolve:secretsmanager:github-token:SecretString:::}}",
+                    "platform": "WEB",
+                    "repository": "https://github.com/apurvathakkar-nextgen/aims-app-apurva"
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_amplify.CfnApp",
+                  "version": "2.178.1"
+                }
+              },
+              "main": {
+                "id": "main",
+                "path": "AmplifyAppStack/AIMS-App/main",
+                "children": {
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "AmplifyAppStack/AIMS-App/main/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::Amplify::Branch",
+                      "aws:cdk:cloudformation:props": {
+                        "appId": {
+                          "Fn::GetAtt": [
+                            "AIMSApp94C46BCA",
+                            "AppId"
+                          ]
+                        },
+                        "branchName": "main",
+                        "enableAutoBuild": true,
+                        "enablePullRequestPreview": true
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_amplify.CfnBranch",
+                      "version": "2.178.1"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "@aws-cdk/aws-amplify-alpha.Branch",
+                  "version": "2.178.1-alpha.0",
+                  "metadata": []
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "@aws-cdk/aws-amplify-alpha.App",
+              "version": "2.178.1-alpha.0",
+              "metadata": []
+            }
+          },
+          "AmplifyAppURL": {
+            "id": "AmplifyAppURL",
+            "path": "AmplifyAppStack/AmplifyAppURL",
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.CfnOutput",
+              "version": "2.178.1"
+            }
+          },
+          "CDKMetadata": {
+            "id": "CDKMetadata",
+            "path": "AmplifyAppStack/CDKMetadata",
+            "children": {
+              "Default": {
+                "id": "Default",
+                "path": "AmplifyAppStack/CDKMetadata/Default",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.CfnResource",
+                  "version": "2.178.1"
+                }
+              },
+              "Condition": {
+                "id": "Condition",
+                "path": "AmplifyAppStack/CDKMetadata/Condition",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.CfnCondition",
+                  "version": "2.178.1"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "constructs.Construct",
+              "version": "10.4.2"
+            }
+          },
+          "BootstrapVersion": {
+            "id": "BootstrapVersion",
+            "path": "AmplifyAppStack/BootstrapVersion",
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.CfnParameter",
+              "version": "2.178.1"
+            }
+          },
+          "CheckBootstrapVersion": {
+            "id": "CheckBootstrapVersion",
+            "path": "AmplifyAppStack/CheckBootstrapVersion",
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.CfnRule",
+              "version": "2.178.1"
+            }
+          }
+        },
+        "constructInfo": {
+          "fqn": "aws-cdk-lib.Stack",
+          "version": "2.178.1"
+        }
+      },
+      "Tree": {
+        "id": "Tree",
+        "path": "Tree",
+        "constructInfo": {
+          "fqn": "constructs.Construct",
+          "version": "10.4.2"
+        }
+      }
+    },
+    "constructInfo": {
+      "fqn": "aws-cdk-lib.App",
+      "version": "2.178.1"
+    }
+  }
+}
