@@ -1,11 +1,11 @@
 {
   "name": "aims-application",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "frontend/src/index.js",
   "private": true,
   "scripts": {
-    "start:frontend": "cd frontend && npm start",
-    "build:frontend": "cd frontend && npm run build",
+    "start": "cd frontend && npm start",
+    "build": "cd frontend && npm run build",
     "amplify:push": "amplify push",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
