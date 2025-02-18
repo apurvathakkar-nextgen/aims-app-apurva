@@ -12,6 +12,7 @@
     "@emotion/styled": "^11.14.0",
     "@mui/icons-material": "^6.4.3",
     "@mui/material": "^6.4.4",
+    "@shadcn/ui": "^0.0.4",
     "aws-amplify": "^6.12.3",
     "chart.js": "^4.4.7",
     "cra-template-typescript": "1.2.0",

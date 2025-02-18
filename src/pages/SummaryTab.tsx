@@ -24,8 +24,19 @@ import {
   Collapse,
   Typography,
   Box,
+  Switch,
+  FormControlLabel,
+  Card,
+  CardContent,
 } from '@mui/material';
-import { Delete as DeleteIcon, Edit as EditIcon, Search as SearchIcon, Add as AddIcon, ExpandMore as ExpandMoreIcon, ExpandLess as ExpandLessIcon } from '@mui/icons-material';
+import {
+  Delete as DeleteIcon,
+  Edit as EditIcon,
+  Search as SearchIcon,
+  Add as AddIcon,
+  ExpandMore as ExpandMoreIcon,
+  ExpandLess as ExpandLessIcon,
+} from '@mui/icons-material';
 
 interface Idea {
   id: string;
@@ -46,12 +57,53 @@ interface SummaryTabProps {
   setIdeas: React.Dispatch<React.SetStateAction<Idea[]>>;
 }
 
+const CardView: React.FC<{ ideas: Idea[] }> = ({ ideas }) => {
+  return (
+    <Box display="flex" flexWrap="wrap" gap={2}>
+      {ideas.map((idea) => (
+        <Card key={idea.id} style={{ width: '300px', borderRadius: '8px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
+          <CardContent>
+            <Typography variant="h6" gutterBottom>
+              {idea.id}
+            </Typography>
+            <Typography variant="body2" color="textSecondary">
+              <strong>Date:</strong> {idea.date}
+            </Typography>
+            <Typography variant="body2" color="textSecondary">
+              <strong>Requestor:</strong> {idea.requestor}
+            </Typography>
+            <Typography variant="body2" color="textSecondary">
+              <strong>Process Name:</strong> {idea.processName}
+            </Typography>
+            <Typography variant="body2" color="textSecondary">
+              <strong>Status:</strong> {idea.status}
+            </Typography>
+            <Box display="flex" justifyContent="space-between" marginTop={2}>
+              <Tooltip title="Edit">
+                <IconButton size="small">
+                  <EditIcon fontSize="small" />
+                </IconButton>
+              </Tooltip>
+              <Tooltip title="Delete">
+                <IconButton size="small">
+                  <DeleteIcon fontSize="small" />
+                </IconButton>
+              </Tooltip>
+            </Box>
+          </CardContent>
+        </Card>
+      ))}
+    </Box>
+  );
+};
+
 const SummaryTab: React.FC<SummaryTabProps> = ({ ideas, setIdeas }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [filters, setFilters] = useState({ requestor: '', businessCriticality: '' });
   const [sortConfig, setSortConfig] = useState<{ key: string; direction: 'asc' | 'desc' } | null>(null);
   const [page, setPage] = useState(1);
   const rowsPerPage = 5;
+  const [viewMode, setViewMode] = useState<'table' | 'card'>('table'); // Default to table view
 
   const [newIdea, setNewIdea] = useState({
     id: `AIM/${Math.floor(Math.random() * 1000000)}`,
@@ -125,14 +177,18 @@ const SummaryTab: React.FC<SummaryTabProps> = ({ ideas, setIdeas }) => {
     handleClose();
   };
 
-  const filteredIdeas = ideas.filter((idea) =>
-    idea.id.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    idea.requestor.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    idea.processName.toLowerCase().includes(searchTerm.toLowerCase())
-  ).filter((idea) =>
-    (filters.requestor ? idea.requestor === filters.requestor : true) &&
-    (filters.businessCriticality ? idea.businessCriticality === filters.businessCriticality : true)
-  );
+  const filteredIdeas = ideas
+    .filter(
+      (idea) =>
+        idea.id.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        idea.requestor.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        idea.processName.toLowerCase().includes(searchTerm.toLowerCase())
+    )
+    .filter(
+      (idea) =>
+        (filters.requestor ? idea.requestor === filters.requestor : true) &&
+        (filters.businessCriticality ? idea.businessCriticality === filters.businessCriticality : true)
+    );
 
   const sortedIdeas = [...filteredIdeas].sort((a, b) => {
     if (sortConfig !== null) {
@@ -165,9 +221,20 @@ const SummaryTab: React.FC<SummaryTabProps> = ({ ideas, setIdeas }) => {
       <h2>New Idea</h2>
       <h3>Page {page} of {Math.ceil(filteredIdeas.length / rowsPerPage)}</h3>
 
-      <Button variant="contained" color="primary" startIcon={<AddIcon />} onClick={handleOpen} style={{ marginBottom: '20px' }}>
-        Add New Idea
-      </Button>
+      <Box display="flex" alignItems="center" gap={2} marginBottom="20px">
+        <Button variant="contained" color="primary" startIcon={<AddIcon />} onClick={handleOpen}>
+          Add New Idea
+        </Button>
+        <FormControlLabel
+          control={
+            <Switch
+              checked={viewMode === 'card'}
+              onChange={() => setViewMode(viewMode === 'table' ? 'card' : 'table')}
+            />
+          }
+          label={viewMode === 'table' ? 'Switch to Card View' : 'Switch to Table View'}
+        />
+      </Box>
 
       <Dialog open={open} onClose={handleClose} maxWidth="md" fullWidth>
         <DialogTitle>Add New Idea</DialogTitle>
@@ -426,78 +493,83 @@ const SummaryTab: React.FC<SummaryTabProps> = ({ ideas, setIdeas }) => {
         </FormControl>
       </div>
 
-      <TableContainer component={Paper} style={{ borderRadius: '8px', overflow: 'hidden' }}>
-        <Table>
-          <TableHead>
-            <TableRow style={{ backgroundColor: '#f5f5f5' }}>
-              <TableCell style={{ fontWeight: 'bold' }} onClick={() => requestSort('id')}>
-                Idea {sortConfig?.key === 'id' ? (sortConfig.direction === 'asc' ? '↑' : '↓') : ''}
-              </TableCell>
-              <TableCell style={{ fontWeight: 'bold' }} onClick={() => requestSort('date')}>
-                Date {sortConfig?.key === 'date' ? (sortConfig.direction === 'asc' ? '↑' : '↓') : ''}
-              </TableCell>
-              <TableCell style={{ fontWeight: 'bold' }} onClick={() => requestSort('requestor')}>
-                Requestor {sortConfig?.key === 'requestor' ? (sortConfig.direction === 'asc' ? '↑' : '↓') : ''}
-              </TableCell>
-              <TableCell style={{ fontWeight: 'bold' }} onClick={() => requestSort('processName')}>
-                Process Name {sortConfig?.key === 'processName' ? (sortConfig.direction === 'asc' ? '↑' : '↓') : ''}
-              </TableCell>
-              <TableCell style={{ fontWeight: 'bold' }}>Selected Process</TableCell>
-              <TableCell style={{ fontWeight: 'bold' }}>Business Criticality</TableCell>
-              <TableCell style={{ fontWeight: 'bold' }}>Idea</TableCell>
-              <TableCell style={{ fontWeight: 'bold' }}>Platform</TableCell>
-              <TableCell style={{ fontWeight: 'bold' }}>Process</TableCell>
-              <TableCell style={{ fontWeight: 'bold' }}>Value</TableCell>
-              <TableCell style={{ fontWeight: 'bold' }}>Cost</TableCell>
-              <TableCell style={{ fontWeight: 'bold' }}>Status</TableCell>
-              <TableCell style={{ fontWeight: 'bold' }}>Action</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {paginatedIdeas.map((idea) => (
-              <TableRow key={idea.id} hover style={{ cursor: 'pointer' }}>
-                <TableCell>{idea.id}</TableCell>
-                <TableCell>{idea.date}</TableCell>
-                <TableCell>{idea.requestor}</TableCell>
-                <TableCell>{idea.processName}</TableCell>
-                <TableCell>{idea.selectedProcess}</TableCell>
-                <TableCell>{idea.businessCriticality}</TableCell>
-                <TableCell>
-                  <Checkbox checked={true} disabled />
-                </TableCell>
-                <TableCell>
-                  <Checkbox checked={idea.platform} disabled />
-                </TableCell>
-                <TableCell>
-                  <Checkbox checked={idea.process} disabled />
-                </TableCell>
-                <TableCell>{idea.value}</TableCell>
-                <TableCell>{idea.cost}</TableCell>
-                <TableCell>{idea.status}</TableCell>
-                <TableCell>
-                  <Tooltip title="Edit">
-                    <IconButton>
-                      <EditIcon />
-                    </IconButton>
-                  </Tooltip>
-                  <Tooltip title="Delete">
-                    <IconButton>
-                      <DeleteIcon />
-                    </IconButton>
-                  </Tooltip>
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-
-      <Pagination
-        count={Math.ceil(filteredIdeas.length / rowsPerPage)}
-        page={page}
-        onChange={handlePageChange}
-        style={{ marginTop: '20px', display: 'flex', justifyContent: 'center' }}
-      />
+      {viewMode === 'table' ? (
+        <>
+          <TableContainer component={Paper} style={{ borderRadius: '8px', overflow: 'hidden' }}>
+            <Table>
+              <TableHead>
+                <TableRow style={{ backgroundColor: '#f5f5f5' }}>
+                  <TableCell style={{ fontWeight: 'bold' }} onClick={() => requestSort('id')}>
+                    Idea {sortConfig?.key === 'id' ? (sortConfig.direction === 'asc' ? '↑' : '↓') : ''}
+                  </TableCell>
+                  <TableCell style={{ fontWeight: 'bold' }} onClick={() => requestSort('date')}>
+                    Date {sortConfig?.key === 'date' ? (sortConfig.direction === 'asc' ? '↑' : '↓') : ''}
+                  </TableCell>
+                  <TableCell style={{ fontWeight: 'bold' }} onClick={() => requestSort('requestor')}>
+                    Requestor {sortConfig?.key === 'requestor' ? (sortConfig.direction === 'asc' ? '↑' : '↓') : ''}
+                  </TableCell>
+                  <TableCell style={{ fontWeight: 'bold' }} onClick={() => requestSort('processName')}>
+                    Process Name {sortConfig?.key === 'processName' ? (sortConfig.direction === 'asc' ? '↑' : '↓') : ''}
+                  </TableCell>
+                  <TableCell style={{ fontWeight: 'bold' }}>Selected Process</TableCell>
+                  <TableCell style={{ fontWeight: 'bold' }}>Business Criticality</TableCell>
+                  <TableCell style={{ fontWeight: 'bold' }}>Idea</TableCell>
+                  <TableCell style={{ fontWeight: 'bold' }}>Platform</TableCell>
+                  <TableCell style={{ fontWeight: 'bold' }}>Process</TableCell>
+                  <TableCell style={{ fontWeight: 'bold' }}>Value</TableCell>
+                  <TableCell style={{ fontWeight: 'bold' }}>Cost</TableCell>
+                  <TableCell style={{ fontWeight: 'bold' }}>Status</TableCell>
+                  <TableCell style={{ fontWeight: 'bold' }}>Action</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {paginatedIdeas.map((idea) => (
+                  <TableRow key={idea.id} hover style={{ cursor: 'pointer' }}>
+                    <TableCell>{idea.id}</TableCell>
+                    <TableCell>{idea.date}</TableCell>
+                    <TableCell>{idea.requestor}</TableCell>
+                    <TableCell>{idea.processName}</TableCell>
+                    <TableCell>{idea.selectedProcess}</TableCell>
+                    <TableCell>{idea.businessCriticality}</TableCell>
+                    <TableCell>
+                      <Checkbox checked={true} disabled />
+                    </TableCell>
+                    <TableCell>
+                      <Checkbox checked={idea.platform} disabled />
+                    </TableCell>
+                    <TableCell>
+                      <Checkbox checked={idea.process} disabled />
+                    </TableCell>
+                    <TableCell>{idea.value}</TableCell>
+                    <TableCell>{idea.cost}</TableCell>
+                    <TableCell>{idea.status}</TableCell>
+                    <TableCell>
+                      <Tooltip title="Edit">
+                        <IconButton>
+                          <EditIcon />
+                        </IconButton>
+                      </Tooltip>
+                      <Tooltip title="Delete">
+                        <IconButton>
+                          <DeleteIcon />
+                        </IconButton>
+                      </Tooltip>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+          <Pagination
+            count={Math.ceil(filteredIdeas.length / rowsPerPage)}
+            page={page}
+            onChange={handlePageChange}
+            style={{ marginTop: '20px', display: 'flex', justifyContent: 'center' }}
+          />
+        </>
+      ) : (
+        <CardView ideas={paginatedIdeas} />
+      )}
     </div>
   );
 };
