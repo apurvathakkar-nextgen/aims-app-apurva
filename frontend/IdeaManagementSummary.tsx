@@ -56,7 +56,7 @@ const initialIdeas = [
     status: 'Ideation', // Updated status
   },
 ];
-
+//new update
 const IdeaManagementPage: React.FC = () => {
   // State for managing ideas
   const [ideas, setIdeas] = useState(initialIdeas);
