@@ -26,7 +26,7 @@
     "BasicAuthConfig": {
      "EnableBasicAuth": false
     },
-    "BuildSpec": "{\n  \"version\": \"0.2\",\n  \"phases\": {\n    \"install\": {\n      \"commands\": [\n        \"cd frontend\",\n        \"npm ci\"\n      ]\n    },\n    \"build\": {\n      \"commands\": [\n        \"npm run build\"\n      ]\n    }\n  },\n  \"artifacts\": {\n    \"base-directory\": \"frontend/build\",\n    \"files\": [\n      \"**/*\"\n    ]\n  },\n  \"cache\": {\n    \"paths\": [\n      \"frontend/node_modules/**/*\"\n    ]\n  }\n}",
+    "BuildSpec": "\nversion: \"1\"\nfrontend:\n  phases:\n    preBuild:\n      commands:\n        - cd frontend\n        - npm ci\n    build:\n      commands:\n        - npm run build\n  artifacts:\n    baseDirectory: frontend/build\n    files:\n      - \"**/*\"\n  cache:\n    paths:\n      - frontend/node_modules/**/*\n",
     "EnvironmentVariables": [
      {
       "Name": "AMPLIFY_ENV",

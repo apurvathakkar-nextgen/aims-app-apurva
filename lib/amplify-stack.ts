@@ -7,40 +7,37 @@ export class AmplifyStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
 
+    // Custom buildSpec that returns a YAML string
+    const myBuildSpec: codebuild.BuildSpec = {
+      isImmediate: false,
+      toBuildSpec: () => `
+version: "1"
+frontend:
+  phases:
+    preBuild:
+      commands:
+        - cd frontend
+        - npm ci
+    build:
+      commands:
+        - npm run build
+  artifacts:
+    baseDirectory: frontend/build
+    files:
+      - "**/*"
+  cache:
+    paths:
+      - frontend/node_modules/**/*
+`
+    };
+
     const amplifyApp = new amplify.App(this, 'AIMS-App', {
       sourceCodeProvider: new amplify.GitHubSourceCodeProvider({
         owner: 'apurvathakkar-nextgen',
         repository: 'aims-app-apurva',
         oauthToken: cdk.SecretValue.secretsManager('github-token'),
       }),
-
-      buildSpec: codebuild.BuildSpec.fromObject({
-        version: "0.2",
-        phases: {
-          install: {
-            commands: [
-              "cd frontend",
-              "npm ci"
-            ]
-          },
-          build: {
-            commands: [
-              "npm run build"
-            ]
-          }
-        },
-        artifacts: {
-          "base-directory": "frontend/build",
-          files: [
-            "**/*"
-          ]
-        },
-        cache: {
-          paths: [
-            "frontend/node_modules/**/*"
-          ]
-        }
-      })
+      buildSpec: myBuildSpec,
     });
 
     const mainBranch = amplifyApp.addBranch('main');
