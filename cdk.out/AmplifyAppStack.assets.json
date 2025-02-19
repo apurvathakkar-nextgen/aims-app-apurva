@@ -1,7 +1,7 @@
 {
   "version": "39.0.0",
   "files": {
-    "4570d2de5f852649547cfe6fc3487aade0f81d79947ecbf15b6e89d4abdabe28": {
+    "143f735331f7231a817ff0cdfac18200938bc25fb8229b9254a2c191093aa0bf": {
       "source": {
         "path": "AmplifyAppStack.template.json",
         "packaging": "file"
@@ -9,7 +9,7 @@
       "destinations": {
         "current_account-current_region": {
           "bucketName": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}",
-          "objectKey": "4570d2de5f852649547cfe6fc3487aade0f81d79947ecbf15b6e89d4abdabe28.json",
+          "objectKey": "143f735331f7231a817ff0cdfac18200938bc25fb8229b9254a2c191093aa0bf.json",
           "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-file-publishing-role-${AWS::AccountId}-${AWS::Region}"
         }
       }
