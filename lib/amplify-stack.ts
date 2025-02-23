@@ -16,9 +16,12 @@ frontend:
   phases:
     preBuild:
       commands:
+        - cd amplify
+        - ls
+        - cd..
         - cd frontend
         - npm ci
-        - ls
+        - ls ./src
         - cp amplify_outputs.json ./src/amplify_outputs.json
     build:
       commands:

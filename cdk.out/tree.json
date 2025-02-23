@@ -66,7 +66,7 @@
                     "basicAuthConfig": {
                       "enableBasicAuth": false
                     },
-                    "buildSpec": "\nversion: \"1\"\nfrontend:\n  phases:\n    preBuild:\n      commands:\n        - cd frontend\n        - npm ci\n        - ls\n        - cp amplify_outputs.json ./src/amplify_outputs.json\n    build:\n      commands:\n        - npm run build\n  artifacts:\n    baseDirectory: frontend/build\n    files:\n      - \"**/*\"\n  cache:\n    paths:\n      - frontend/node_modules/**/*\n",
+                    "buildSpec": "\nversion: \"1\"\nfrontend:\n  phases:\n    preBuild:\n      commands:\n        - cd amplify\n        - ls\n        - cd..\n        - cd frontend\n        - npm ci\n        - ls ./src\n        - cp amplify_outputs.json ./src/amplify_outputs.json\n    build:\n      commands:\n        - npm run build\n  artifacts:\n    baseDirectory: frontend/build\n    files:\n      - \"**/*\"\n  cache:\n    paths:\n      - frontend/node_modules/**/*\n",
                     "environmentVariables": [
                       {
                         "name": "AMPLIFY_ENV",
