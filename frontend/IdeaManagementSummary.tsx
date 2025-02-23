@@ -27,7 +27,7 @@ import {
 } from '@mui/material';
 import { Delete as DeleteIcon, Edit as EditIcon, Search as SearchIcon, Add as AddIcon, ExpandMore as ExpandMoreIcon, ExpandLess as ExpandLessIcon } from '@mui/icons-material';
 
-// Initial data for the table with babele
+// Initial data for
 const initialIdeas = [
   {
     id: 'AIM/635981',
