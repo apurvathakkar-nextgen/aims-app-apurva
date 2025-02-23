@@ -18,6 +18,7 @@ frontend:
       commands:
         - cd frontend
         - npm ci
+        - node generate-amplify-outputs.js
     build:
       commands:
         - npm run build
