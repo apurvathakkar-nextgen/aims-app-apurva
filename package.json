@@ -6,6 +6,7 @@
   "scripts": {
     "start": "cd frontend && npm start",
     "build": "cd frontend && npm run build",
+    "serve": "serve -s frontend/build",
     "amplify:push": "amplify push",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
