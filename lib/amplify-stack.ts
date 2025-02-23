@@ -18,7 +18,7 @@ frontend:
       commands:
         - cd frontend
         - npm ci
-        - cp ../amplify/amplify_outputs.json ./src/amplify_outputs.json
+        - cp ./amplify_outputs.json ./src/amplify_outputs.json
     build:
       commands:
         - npm run build
