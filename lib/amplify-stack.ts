@@ -16,9 +16,6 @@ frontend:
   phases:
     preBuild:
       commands:
-        - cd amplify
-        - ls
-        - cd..
         - cd frontend
         - npm ci
         - ls ./src
