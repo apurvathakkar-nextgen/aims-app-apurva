@@ -11,7 +11,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "",
+  "author": "Apurva Thakkar",
   "license": "ISC",
   "type": "commonjs",
   "description": "",

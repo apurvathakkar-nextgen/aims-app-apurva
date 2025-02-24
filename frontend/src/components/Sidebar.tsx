@@ -23,6 +23,7 @@ import {
   ThumbUp as ApprovalIcon,
   Settings as SettingsIcon,
 } from '@mui/icons-material';
+import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 
 // IMPORTANT: Use named imports from @aws-amplify/auth
 import { signOut } from '@aws-amplify/auth';
@@ -38,6 +39,19 @@ const Sidebar: React.FC = () => {
       navigate('/login'); // Redirect to login page after logout
     } catch (error) {
       console.error('Error signing out:', error);
+    }
+  };
+
+  // New handler to call the Lambda endpoint
+  const handleTestLambda = async () => {
+    try {
+      // Replace the URL below with your actual API Gateway endpoint path that triggers your Lambda.
+      const response = await fetch('https://c1dzlpyk3e.execute-api.us-east-1.amazonaws.com/prod/items');
+      const data = await response.json();
+      alert(`Lambda response: ${data.message}`);
+    } catch (error) {
+      console.error('Error calling Lambda:', error);
+      alert('Error calling Lambda.');
     }
   };
 
@@ -222,6 +236,24 @@ const Sidebar: React.FC = () => {
           </ListItemIcon>
           {!isCollapsed && (
             <ListItemText primary="Control Room" sx={{ color: '#000000' }} />
+          )}
+        </ListItem>
+
+        {/* New: Test API Button */}
+        <ListItem
+          button
+          onClick={handleTestLambda}
+          sx={{
+            borderRadius: 1,
+            mb: 1,
+            '&:hover': { backgroundColor: '#f0f0f0' },
+          }}
+        >
+          <ListItemIcon sx={{ color: '#000000' }}>
+            <PlayArrowIcon />
+          </ListItemIcon>
+          {!isCollapsed && (
+            <ListItemText primary="Test API" sx={{ color: '#000000' }} />
           )}
         </ListItem>
       </List>

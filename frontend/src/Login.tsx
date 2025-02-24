@@ -33,7 +33,7 @@ const Login: React.FC = () => {
         const currentUser = await getCurrentUser();
         if (currentUser) {
           console.log("User already signed in. Navigating to /workspace.");
-          navigate('/workspace');
+          navigate('/dashboard');
         }
       } catch (err) {
         // If no current user, do nothing.
@@ -61,7 +61,7 @@ const Login: React.FC = () => {
 
       if (currentUser) {
         console.log("User is authenticated. Redirecting to /workspace...");
-        navigate('/workspace'); // Redirect after successful login
+        navigate('/dashboard'); // Redirect after successful login
       } else {
         console.error("User is not authenticated after sign-in.");
         setError("User authentication failed. Please try again.");

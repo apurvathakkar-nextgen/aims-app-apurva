@@ -85,6 +85,144 @@
       },
       "displayName": "AmplifyAppStack"
     },
+    "BackendStack.assets": {
+      "type": "cdk:asset-manifest",
+      "properties": {
+        "file": "BackendStack.assets.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+      }
+    },
+    "BackendStack": {
+      "type": "aws:cloudformation:stack",
+      "environment": "aws://unknown-account/unknown-region",
+      "properties": {
+        "templateFile": "BackendStack.template.json",
+        "terminationProtection": false,
+        "validateOnSynth": false,
+        "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-deploy-role-${AWS::AccountId}-${AWS::Region}",
+        "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-cfn-exec-role-${AWS::AccountId}-${AWS::Region}",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/acf35301e1f47a45bc9389cee54da487badb4b07cdc5821c47b667a2eb017542.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
+        "additionalDependencies": [
+          "BackendStack.assets"
+        ],
+        "lookupRole": {
+          "arn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-lookup-role-${AWS::AccountId}-${AWS::Region}",
+          "requiresBootstrapStackVersion": 8,
+          "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+        }
+      },
+      "dependencies": [
+        "BackendStack.assets"
+      ],
+      "metadata": {
+        "/BackendStack/MyLambda/ServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MyLambdaServiceRole4539ECB6"
+          }
+        ],
+        "/BackendStack/MyLambda/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MyLambdaCCE802FB"
+          }
+        ],
+        "/BackendStack/MyApi/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MyApi49610EDF"
+          }
+        ],
+        "/BackendStack/MyApi/CloudWatchRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MyApiCloudWatchRole2BEC1A9C"
+          }
+        ],
+        "/BackendStack/MyApi/Account": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MyApiAccount13882D84"
+          }
+        ],
+        "/BackendStack/MyApi/Deployment/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MyApiDeploymentECB0D05Ec0d5ef2351695d90f4b1dc3d6b2f3130"
+          }
+        ],
+        "/BackendStack/MyApi/DeploymentStage.prod/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MyApiDeploymentStageprodE1054AF0"
+          }
+        ],
+        "/BackendStack/MyApi/Endpoint": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MyApiEndpoint869ABE96"
+          }
+        ],
+        "/BackendStack/MyApi/Default/items/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MyApiitems739EA3DF"
+          }
+        ],
+        "/BackendStack/MyApi/Default/items/GET/ApiPermission.BackendStackMyApi7F148EC6.GET..items": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MyApiitemsGETApiPermissionBackendStackMyApi7F148EC6GETitemsEC6E7AA8"
+          }
+        ],
+        "/BackendStack/MyApi/Default/items/GET/ApiPermission.Test.BackendStackMyApi7F148EC6.GET..items": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MyApiitemsGETApiPermissionTestBackendStackMyApi7F148EC6GETitems656DE385"
+          }
+        ],
+        "/BackendStack/MyApi/Default/items/GET/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MyApiitemsGET84EC82EC"
+          }
+        ],
+        "/BackendStack/ApiEndpoint": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ApiEndpoint"
+          }
+        ],
+        "/BackendStack/CDKMetadata/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadata"
+          }
+        ],
+        "/BackendStack/CDKMetadata/Condition": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadataAvailable"
+          }
+        ],
+        "/BackendStack/BootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BootstrapVersion"
+          }
+        ],
+        "/BackendStack/CheckBootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CheckBootstrapVersion"
+          }
+        ]
+      },
+      "displayName": "BackendStack"
+    },
     "Tree": {
       "type": "cdk:tree",
       "properties": {
